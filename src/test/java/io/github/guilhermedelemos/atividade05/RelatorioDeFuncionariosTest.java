@@ -19,6 +19,7 @@ public class RelatorioDeFuncionariosTest {
 
     private static FuncionarioDAO fDaoMock;
     private static ReceitaFederal rfMock;
+    private static RelatorioDeFuncionarios rf;
 
     public RelatorioDeFuncionariosTest() {
     }
@@ -27,6 +28,7 @@ public class RelatorioDeFuncionariosTest {
     public static void setUpClass() {
         fDaoMock = mock(FuncionarioDAO.class);
         rfMock = mock(ReceitaFederal.class);
+        rf = new RelatorioDeFuncionarios(fDaoMock);
     }
 
     @Test
@@ -42,7 +44,6 @@ public class RelatorioDeFuncionariosTest {
         when(rfMock.isCPFBloqueado("222222222-22")).thenReturn(Boolean.FALSE);
 
         // TESTE
-        RelatorioDeFuncionarios rf = new RelatorioDeFuncionarios(fDaoMock);
         rf.setRf(rfMock);
         assertEquals(0, rf.getFuncComCPFBloqueado("tecnico"));
     }
@@ -58,7 +59,6 @@ public class RelatorioDeFuncionariosTest {
         when(rfMock.isCPFBloqueado("333333333-33")).thenReturn(Boolean.TRUE);
 
         // TESTE
-        RelatorioDeFuncionarios rf = new RelatorioDeFuncionarios(fDaoMock);
         rf.setRf(rfMock);
         assertEquals(1, rf.getFuncComCPFBloqueado("analista"));
     }
@@ -80,7 +80,6 @@ public class RelatorioDeFuncionariosTest {
         when(rfMock.isCPFBloqueado("098876654-99")).thenReturn(Boolean.TRUE);
 
         // TESTE
-        RelatorioDeFuncionarios rf = new RelatorioDeFuncionarios(fDaoMock);
         rf.setRf(rfMock);
         assertEquals(2, rf.getFuncComCPFBloqueado("gerente"));
     }
