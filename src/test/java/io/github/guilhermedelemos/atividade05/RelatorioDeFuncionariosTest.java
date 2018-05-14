@@ -26,20 +26,20 @@ public class RelatorioDeFuncionariosTest {
         ReceitaFederal rfMock = mock(ReceitaFederal.class);
         
         // MOCK FuncionarioDAO
-        this.fDaoMock = mock(FuncionarioDAO.class);
-        this.funcionarios = new ArrayList<>();
-        this.funcionarios.add(new Funcionario(1, "Tecnico 1", "111111111-11")); // N-BLOQUEADO
-        this.funcionarios.add(new Funcionario(2, "Tecnico 2", "222222222-22")); // N-BLOQUEADO
-        when(this.fDaoMock.getFuncionariosBy("tecnico")).thenReturn(this.funcionarios);
+        fDaoMock = mock(FuncionarioDAO.class);
+        funcionarios = new ArrayList<>();
+        funcionarios.add(new Funcionario(1, "Tecnico 1", "111111111-11")); // N-BLOQUEADO
+        funcionarios.add(new Funcionario(2, "Tecnico 2", "222222222-22")); // N-BLOQUEADO
+        when(fDaoMock.getFuncionariosBy("tecnico")).thenReturn(funcionarios);
 
         // MOCK ReceitaFederal
-        this.rfMock = mock(ReceitaFederal.class);
-        when(this.rfMock.isCPFBloqueado("111111111-11")).thenReturn(Boolean.FALSE);
-        when(this.rfMock.isCPFBloqueado("222222222-22")).thenReturn(Boolean.FALSE);
+        rfMock = mock(ReceitaFederal.class);
+        when(rfMock.isCPFBloqueado("111111111-11")).thenReturn(Boolean.FALSE);
+        when(rfMock.isCPFBloqueado("222222222-22")).thenReturn(Boolean.FALSE);
         
         // TESTE
-        RelatorioDeFuncionarios rf = new RelatorioDeFuncionarios(this.fDaoMock);
-        rf.setRf(this.rfMock);
+        RelatorioDeFuncionarios rf = new RelatorioDeFuncionarios(fDaoMock);
+        rf.setRf(rfMock);
         assertEquals(0, rf.getFuncComCPFBloqueado("tecnico"));
     }
 }
