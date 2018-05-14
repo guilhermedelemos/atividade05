@@ -42,4 +42,23 @@ public class RelatorioDeFuncionariosTest {
         rf.setRf(rfMock);
         assertEquals(0, rf.getFuncComCPFBloqueado("tecnico"));
     }
+    
+    @Test
+    public void cenario2Test() {
+        // MOCK FuncionarioDAO
+        FuncionarioDAO fDaoMock = mock(FuncionarioDAO.class);
+        ArrayList<Funcionario> funcionarios = new ArrayList<>();
+        funcionarios.add(new Funcionario(3, "Analista 1", "333333333-33")); //  BLOQUEADO
+        when(fDaoMock.getFuncionariosBy("analista")).thenReturn(funcionarios);
+
+        // MOCK ReceitaFederal
+        ReceitaFederal rfMock = mock(ReceitaFederal.class);
+        when(rfMock.isCPFBloqueado("333333333-33")).thenReturn(Boolean.TRUE);
+        
+        // TESTE
+        RelatorioDeFuncionarios rf = new RelatorioDeFuncionarios(fDaoMock);
+        rf.setRf(rfMock);
+        assertEquals(1, rf.getFuncComCPFBloqueado("analista"));
+    }
+    
 }
