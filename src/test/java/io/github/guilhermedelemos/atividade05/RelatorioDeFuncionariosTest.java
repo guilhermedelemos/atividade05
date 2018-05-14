@@ -5,6 +5,10 @@
  */
 package io.github.guilhermedelemos.atividade05;
 
+import io.github.guilhermedelemos.atividade05.exercicio6.RelatorioDeFuncionarios;
+import io.github.guilhermedelemos.atividade05.exercicio6.FuncionarioDAO;
+import io.github.guilhermedelemos.atividade05.exercicio6.Funcionario;
+import io.github.guilhermedelemos.atividade05.exercicio6.ReceitaFederal;
 import java.util.ArrayList;
 import org.junit.Test;
 import static org.junit.Assert.*;

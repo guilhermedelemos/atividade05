@@ -3,14 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package io.github.guilhermedelemos.atividade05;
-
-import java.util.ArrayList;
+package io.github.guilhermedelemos.atividade05.exercicio6;
 
 /**
  *
  * @author guilherme
  */
-public interface FuncionarioDAO {
-    public ArrayList<Funcionario> getFuncionariosBy(String categoria);
+public interface ReceitaFederal {
+    public boolean isCPFBloqueado(String cpf);
 }
