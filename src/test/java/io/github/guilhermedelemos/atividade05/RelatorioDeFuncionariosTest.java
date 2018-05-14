@@ -63,4 +63,26 @@ public class RelatorioDeFuncionariosTest {
         assertEquals(1, rf.getFuncComCPFBloqueado("analista"));
     }
 
+    @Test
+    public void cenario3Test() {
+        // MOCK FuncionarioDAO
+        ArrayList<Funcionario> funcionarios = new ArrayList<>();
+        funcionarios.add(new Funcionario(4, "Gerente 1", "123456789-00")); // N-BLOQUEADO
+        funcionarios.add(new Funcionario(5, "Gerente 2", "111222333-44")); //  BLOQUEADO
+        funcionarios.add(new Funcionario(6, "Gerente 3", "654321987-23")); // N-BLOQUEADO
+        funcionarios.add(new Funcionario(7, "Gerente 4", "098876654-99")); //  BLOQUEADO
+        when(fDaoMock.getFuncionariosBy("gerente")).thenReturn(funcionarios);
+
+        // MOCK ReceitaFederal
+        when(rfMock.isCPFBloqueado("123456789-00")).thenReturn(Boolean.FALSE);
+        when(rfMock.isCPFBloqueado("111222333-44")).thenReturn(Boolean.TRUE);
+        when(rfMock.isCPFBloqueado("654321987-23")).thenReturn(Boolean.FALSE);
+        when(rfMock.isCPFBloqueado("098876654-99")).thenReturn(Boolean.TRUE);
+
+        // TESTE
+        RelatorioDeFuncionarios rf = new RelatorioDeFuncionarios(fDaoMock);
+        rf.setRf(rfMock);
+        assertEquals(2, rf.getFuncComCPFBloqueado("gerente"));
+    }
+
 }
