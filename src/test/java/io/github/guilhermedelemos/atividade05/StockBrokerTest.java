@@ -41,18 +41,18 @@ public class StockBrokerTest {
         StockBroker broker = new StockBroker(mwMock);
         broker.perform(pMock, stock);
     }
-    
+
     @Test
-    public void comprarAcoesTest() throws Exception {
+    public void comprarAcoesTest() {
         // MOCK PORTFOLIO - PREÇO
         Stock stock = new Stock("GOLL4", "Gol", new BigDecimal(10));
-     
+
         Portfolio pMock = mock(Portfolio.class);
         when(pMock.getAvgPrice(stock)).thenReturn(new BigDecimal(10));
 
         // MOCK MARKET WATCHER
         Stock mwStock = new Stock("GOLL4", "Gol", new BigDecimal(5));
-        
+
         MarketWatcher mwMock = mock(MarketWatcher.class);
         when(mwMock.getQuote("GOLL4")).thenReturn(mwStock);
 
@@ -60,9 +60,9 @@ public class StockBrokerTest {
         StockBroker broker = new StockBroker(mwMock);
         broker.perform(pMock, stock);
     }
-    
+
     @Test(expected = Exception.class)
-    public void semInternetAcoesTest() throws Exception {
+    public void semInternetAcoesTest() {
         // MOCK PORTFOLIO - PREÇO
         Stock stock = new Stock("GOLL4", "Gol", new BigDecimal(10));
         Portfolio pMock = mock(Portfolio.class);
@@ -77,5 +77,28 @@ public class StockBrokerTest {
         StockBroker broker = new StockBroker(mwMock);
         broker.perform(pMock, stock);
     }
-    
+
+    @Test
+    public void semBancoDeDadosTest() {
+        // MOCK PORTFOLIO - PREÇO
+        Stock stock = new Stock("GOLL4", "Gol", new BigDecimal(10));
+
+        Portfolio pMock = mock(Portfolio.class);
+        when(pMock.getAvgPrice(stock)).thenThrow(new RuntimeException("Sem acesso ao banco de dados."));
+
+        // MOCK MARKET WATCHER
+        Stock mwStock = new Stock("GOLL4", "Gol", new BigDecimal(20));
+
+        MarketWatcher mwMock = mock(MarketWatcher.class);
+        when(mwMock.getQuote("GOLL4")).thenReturn(mwStock);
+
+        // PERFORM
+        StockBroker broker = new StockBroker(mwMock);
+        try {
+            broker.perform(pMock, stock);
+        } catch (RuntimeException e) {
+            assertEquals("Sem acesso ao banco de dados.", e.getMessage());
+        }
+    }
+
 }
