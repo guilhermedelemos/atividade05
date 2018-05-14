@@ -5,6 +5,10 @@
  */
 package io.github.guilhermedelemos.atividade05;
 
+import io.github.guilhermedelemos.atividade05.exercicio4.StockBroker;
+import io.github.guilhermedelemos.atividade05.exercicio4.Portfolio;
+import io.github.guilhermedelemos.atividade05.exercicio4.MarketWatcher;
+import io.github.guilhermedelemos.atividade05.exercicio4.Stock;
 import java.math.BigDecimal;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -23,13 +27,13 @@ public class StockBrokerTest {
     public void venderAcoesTest() {
         // MOCK PORTFOLIO - PREÇO
         Stock stock = new Stock("GOLL4", "Gol", new BigDecimal(10));
-        
+
         Portfolio pMock = mock(Portfolio.class);
         when(pMock.getAvgPrice(stock)).thenReturn(new BigDecimal(10));
 
         // MOCK MARKET WATCHER
         Stock mwStock = new Stock("GOLL4", "Gol", new BigDecimal(20));
-        
+
         MarketWatcher mwMock = mock(MarketWatcher.class);
         when(mwMock.getQuote("GOLL4")).thenReturn(mwStock);
 
