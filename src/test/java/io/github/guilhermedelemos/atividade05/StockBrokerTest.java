@@ -41,4 +41,24 @@ public class StockBrokerTest {
         StockBroker broker = new StockBroker(mwMock);
         broker.perform(pMock, stock);
     }
+    
+    @Test
+    public void comprarAcoesTest() throws Exception {
+        // MOCK PORTFOLIO - PREÇO
+        Stock stock = new Stock("GOLL4", "Gol", new BigDecimal(10));
+     
+        Portfolio pMock = mock(Portfolio.class);
+        when(pMock.getAvgPrice(stock)).thenReturn(new BigDecimal(10));
+
+        // MOCK MARKET WATCHER
+        Stock mwStock = new Stock("GOLL4", "Gol", new BigDecimal(5));
+        
+        MarketWatcher mwMock = mock(MarketWatcher.class);
+        when(mwMock.getQuote("GOLL4")).thenReturn(mwStock);
+
+        // PERFORM
+        StockBroker broker = new StockBroker(mwMock);
+        broker.perform(pMock, stock);
+    }
+    
 }
